@@ -4,12 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Car from'./Car';
+import FavoriteColor from './components/FavoriteColor';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
-    <Car car = {{brand :"Ford"}} />
+    {/* <Car car = {{brand :"Ford"}} /> */}
+    <FavoriteColor />
   </React.StrictMode>
 );
 
