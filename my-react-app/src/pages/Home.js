@@ -56,56 +56,57 @@ function App() {
   //  var studentList = students.filter(nameFilter);
   //  const student_list =studentList.map();
 
-  function print() {
-    var x = "";
-    for (var i = 0; i <= games.length; i++) {
-      x += <p>{games[i]}</p>;
-      return x;
-    }
-  }
+  // function print() {
+  //   var x = "";
+  //   for (var i = 0; i <= games.length; i++) {
+  //     x += <p>{games[i]}</p>;
+  //     return x;
+  //   }
+  // }
   const [searchTerm, setSearchTerm] = useState("");
   const [data, setData] = useState([]);
-  const [games, setGames] = useState([]);
-  useEffect(() => {
-    fetch("https://62b049b8b0a980a2ef4f73a7.mockapi.io/newgames")
-      .then((res) => res.json())
-      .then((data) => {
-        setGames(data);
-      });
-  }, []);
 
-  const searchStudent = () => {
-    console.log(searchTerm);
-    let result = null;
+  useEffect(() => {
+    console.log('app useeffect!!');
+    let url = 'https://62b049b8b0a980a2ef4f73a7.mockapi.io/newgames';
     if (searchTerm.length > 0) {
-      result = games.filter((game) => {
-        let firstName = game.name.toLowerCase();
-        return firstName.indexOf(searchTerm.toLowerCase()) == 0;
+      url = url + '?search=' + searchTerm;
+    }
+
+    console.log(url);
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data); //setStudents(data)
       });
-    } else result = games;
-    console.log(result);
-    setData(result);
-  };
+  }, [searchTerm]);
+
+  // const searchStudent = () => {
+  //   console.log(searchTerm);
+  //   let result = null;
+  //   if (searchTerm.length > 0) {
+  //     result = games.filter((game) => {
+  //       let firstName = game.name.toLowerCase();
+  //       return firstName.indexOf(searchTerm.toLowerCase()) == 0;
+  //     });
+  //   } else result = games;
+  //   console.log(result);
+  //   setData(result);
+  // };
   return (
     <div className="App">
       <h2 className="text-4xl"> Danh sach tro choi dien tu</h2>
-      <div>{print()}</div>
+      {/* <div>{print()}</div> */}
 
       <div className="row">
         <div className="col-sm-6">
           <div className="input-group">
             <input
               value={searchTerm}
-              onInput={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
             <div className="input-group-append">
-              <button
-                className="btn btn-secondary"
-                type="button"
-                onClick={searchStudent}
-              >
-                <i className="fa fa-search"></i>
-              </button>
+            
             </div>
           </div>
         </div>
